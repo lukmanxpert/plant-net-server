@@ -47,8 +47,11 @@ const client = new MongoClient(uri, {
   },
 });
 async function run() {
+  // collections
   const database = client.db("plantNet");
   const userCollection = database.collection("users");
+  const plantsCollection = database.collection("plants");
+
   try {
     // Generate jwt token
     app.post("/jwt", async (req, res) => {
@@ -85,6 +88,12 @@ async function run() {
       return res.send(result);
     });
 
+    // post plants
+    app.post("/plants", verifyToken, async (req, res) => {
+      const plant = req.body;
+      const result = await plantsCollection.insertOne(plant);
+      res.send(result);
+    });
     // Logout
     app.get("/logout", async (req, res) => {
       try {
