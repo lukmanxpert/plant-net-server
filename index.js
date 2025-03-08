@@ -94,6 +94,12 @@ async function run() {
       const result = await plantsCollection.insertOne(plant);
       res.send(result);
     });
+
+    // get all plants
+    app.get("/plants", async (req, res) => {
+      const result = await plantsCollection.find().toArray();
+      res.send(result);
+    });
     // Logout
     app.get("/logout", async (req, res) => {
       try {
