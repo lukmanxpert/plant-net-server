@@ -100,6 +100,16 @@ async function run() {
       const result = await plantsCollection.find().toArray();
       res.send(result);
     });
+
+    // get plants by id
+    app.get("/plant/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await plantsCollection.findOne(query);
+      res.send(result);
+    });
     // Logout
     app.get("/logout", async (req, res) => {
       try {
